@@ -10,6 +10,31 @@ import {
   testimonials,
 } from "@/lib/content";
 
+/** Wraps a project cover in a link only when there's somewhere to go. */
+function CoverLink({
+  href,
+  label,
+  children,
+}: {
+  href?: string;
+  label: string;
+  children: React.ReactNode;
+}) {
+  if (!href) return <div className="group block">{children}</div>;
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={label}
+      className="group block"
+    >
+      {children}
+    </a>
+  );
+}
+
 function SectionLabel({ index, title }: { index: string; title: string }) {
   return (
     <div className="mb-10 flex items-baseline gap-4 border-t border-rule pt-4">
@@ -106,12 +131,12 @@ export default function Home() {
           <div className="grid items-start gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {work.map((c) => (
               <article key={c.slug}>
-                <a
+                {/* Without an href the cover is a plain block, not a link —
+                    a card that looks clickable but goes nowhere is worse than
+                    one that doesn't invite the click. */}
+                <CoverLink
                   href={c.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`View the ${c.title} case study`}
-                  className="group block"
+                  label={`View the ${c.title} case study`}
                 >
                   {c.video && c.cover ? (
                     <CoverVideo
@@ -141,18 +166,22 @@ export default function Home() {
                       </span>
                     </div>
                   )}
-                </a>
+                </CoverLink>
 
                 <div className="mt-4 flex items-baseline justify-between gap-4">
                   <h3 className="font-display text-2xl leading-tight">
-                    <a
-                      href={c.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="transition-colors hover:text-accent"
-                    >
-                      {c.title}
-                    </a>
+                    {c.href ? (
+                      <a
+                        href={c.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="transition-colors hover:text-accent"
+                      >
+                        {c.title}
+                      </a>
+                    ) : (
+                      c.title
+                    )}
                   </h3>
                   <span className="shrink-0 text-sm text-ink-faint">
                     {c.year}

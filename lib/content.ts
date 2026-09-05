@@ -13,8 +13,8 @@ export const site = {
   availabilityLabel: "Available for work",
   socials: [
     { label: "Behance", href: "https://www.behance.net/bridgetmonday282" },
-    { label: "X", href: "https://x.com/" }, // TODO: your handle
-    { label: "LinkedIn", href: "https://linkedin.com/in/" }, // TODO
+    { label: "X", href: "https://x.com/uxui_Briii" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/bridget-monday/" },
   ],
 }
 
@@ -107,7 +107,9 @@ export type CaseStudy = {
   sector: string
   year: string
   tags: string[]
-  href: string
+  /** Omit while the case study is still being written — the card then renders
+   *  without a link rather than pointing at a dead "#". */
+  href?: string
   featured?: boolean
   /** Cover image in /public. Falls back to a placeholder panel when absent. */
   cover?: string
@@ -131,7 +133,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Transit",
     year: "2026",
     tags: ["Mobile", "Maps", "Marketplace"],
-    href: "#", // TODO: link to the live demo once it's deployed
+    // No href yet — the case study is still being written.
     featured: true,
   },
   {
