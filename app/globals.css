@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #e8e9ed;
+  --paper-raised: #ffffff;
+  --ink: #14161c;
+  --ink-soft: #545a66;
+  --ink-faint: #888e9c;
+  --rule: #d5d7de;
+  --accent: #2f5f8c;
+  /* Availability pill. The only green on the site. */
+  --ok: #299b75;
+  --ok-tint: #f1fbf7;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-ok: var(--ok);
+  --color-ok-tint: var(--ok-tint);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-display);
+}
+
+/* No saved choice: follow the operating system. An explicit "light" wins. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1116;
+    --paper-raised: #171a21;
+    --ink: #eaecf2;
+    --ink-soft: #a2a7b3;
+    --ink-faint: #71767f;
+    --rule: #262a33;
+    --accent: #7fa9d4;
+    --ok: #5ec9a0;
+    --ok-tint: #10231d;
+  }
+}
+
+/* The toggle's explicit choice, which beats the system in both directions. */
+:root[data-theme="dark"] {
+  --paper: #0f1116;
+  --paper-raised: #171a21;
+  --ink: #eaecf2;
+  --ink-soft: #a2a7b3;
+  --ink-faint: #71767f;
+  --rule: #262a33;
+  --accent: #7fa9d4;
+    --ok: #5ec9a0;
+    --ok-tint: #10231d;
+}
+
+/*
+  The toggle icon is swapped in CSS, not React, so the button renders correctly
+  on the server without knowing the theme. Light shows the moon (go dark);
+  dark shows the sun (go light).
+*/
+.icon-sun {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .icon-sun {
+    display: block;
+  }
+  :root:not([data-theme="light"]) .icon-moon {
+    display: none;
+  }
+}
+
+:root[data-theme="dark"] .icon-sun {
+  display: block;
+}
+
+:root[data-theme="dark"] .icon-moon {
+  display: none;
+}
+
+:root[data-theme="light"] .icon-sun {
+  display: none;
+}
+
+:root[data-theme="light"] .icon-moon {
+  display: block;
+}
+
+/*
+  Each nav link reserves the width its own text would take at bold, using a
+  zero-height copy of the label. Without this the row shifts sideways every
+  time the current section changes.
+*/
+.nav-link {
+  display: inline-block;
+}
+
+.nav-link::before {
+  content: attr(data-label);
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: 600;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+
+
+
+
+
+
+
+
