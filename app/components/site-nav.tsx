@@ -56,7 +56,9 @@ export function SiteNav({ items }: { items: NavItem[] }) {
   }, [items, onHome]);
 
   return (
-    <nav className="hidden gap-8 sm:flex">
+    // After fangming.li: 12px between items, and each item carries 14px of
+    // side padding, so the visible gap from one word to the next is 40px.
+    <nav className="hidden gap-3 sm:flex">
       {items.map((item) => {
         const isHash = item.href.startsWith("#");
         // Only files and off-site links get a new tab. Internal routes like
@@ -64,11 +66,17 @@ export function SiteNav({ items }: { items: NavItem[] }) {
         const opensAway =
           item.href.startsWith("http") || item.href.endsWith(".pdf");
         // A hash link only resolves on the home page; from anywhere else it
-        // has to go home first.
-        const href = isHash && !onHome ? `/${item.href}` : item.href;
+        // has to go home first. #contact is the footer, which every page has.
+        const href =
+          isHash && !onHome && item.href !== "#contact"
+            ? `/${item.href}`
+            : item.href;
 
+        // On a project page, Work is where you are.
         const isCurrent = isHash
-          ? onHome && item.href.slice(1) === currentId
+          ? onHome
+            ? item.href.slice(1) === currentId
+            : item.href === "#work" && pathname.startsWith("/work/")
           : !opensAway && pathname === item.href;
 
         return (
@@ -82,8 +90,11 @@ export function SiteNav({ items }: { items: NavItem[] }) {
             onClick={() => {
               if (isHash && onHome) setCurrentId(item.href.slice(1));
             }}
-            className={`nav-link text-base transition-colors hover:text-accent ${
-              isCurrent ? "font-semibold text-ink" : "text-ink-soft"
+            // 16px Inter in full ink; spacing after fangming.li. Height comes
+            // from line-height rather than flex: flex would turn .nav-link's
+            // width-reserving ::before into a visible flex item.
+            className={`nav-link px-[14px] text-base leading-[44px] text-ink transition-colors hover:text-accent ${
+              isCurrent ? "font-semibold" : ""
             }`}
           >
             {item.label}

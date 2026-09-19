@@ -1,8 +1,6 @@
-import Image from "next/image";
 import { AudienceSwitcher } from "@/app/components/audience-switcher";
-import { ContactForm } from "@/app/components/contact-form";
-import { CoverVideo } from "@/app/components/cover-video";
-import { SocialIcon } from "@/app/components/social-icon";
+import { Reveal } from "@/app/components/reveal";
+import { WorkCard } from "@/app/components/work-card";
 import {
   caseStudies,
   processSteps,
@@ -10,29 +8,28 @@ import {
   testimonials,
 } from "@/lib/content";
 
-/** Wraps a project cover in a link only when there's somewhere to go. */
-function CoverLink({
-  href,
-  label,
-  children,
-}: {
-  href?: string;
-  label: string;
-  children: React.ReactNode;
-}) {
-  if (!href) return <div className="group block">{children}</div>;
+const NUMBER_WORDS = [
+  "no",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+  "ten",
+];
 
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={label}
-      className="group block"
-    >
-      {children}
-    </a>
-  );
+/** "five projects, one with AI inside": counted from the data, so adding a
+ *  project updates the note by itself. */
+function workNote() {
+  const say = (n: number) => NUMBER_WORDS[n] ?? String(n);
+  const total = caseStudies.length;
+  const ai = caseStudies.filter((c) => c.ai).length;
+  const projects = `${say(total)} project${total === 1 ? "" : "s"}`;
+  return ai > 0 ? `${projects}, ${say(ai)} with AI inside` : projects;
 }
 
 function SectionLabel({ index, title }: { index: string; title: string }) {
@@ -52,149 +49,100 @@ export default function Home() {
   return (
     <>
       <main id="top" className="mx-auto w-full max-w-6xl flex-1 px-6">
-        {/* Hero */}
-        {/* Hugs its content: height is the content plus the 120px padding,
-            with no viewport-height floor. */}
-        {/* pb 57 + the work section's pt 60 + 3px of heading leading = the
-            120px gap under the scroll cue. */}
-        <section className="flex flex-col justify-center pb-[57px] pt-[120px]">
-          <div>
-            <div className="text-left">
-              <p className="mb-6 text-xs uppercase tracking-[0.2em] text-ink-faint">
-                {site.role}
-              </p>
-              {/*
-                Figma spec: 60/72, -0.5px, centred in an 849px frame.
-                leading-[1.2] is that 72px at 60px, and keeps a sane ratio at
-                the 36px mobile size, which keeps both buttons above the fold.
-              */}
-              {/* Figma sizing: 64/64, -0.5px, 829px frame — in Instrument
-                  Serif, her display face. Mobile keeps 36/42, since 64px
-                  would run to six lines at 375. */}
-              <h1 className="max-w-[622px] font-display text-4xl leading-[42px] tracking-[-0.5px] sm:text-[64px] sm:leading-[64px]">
-                {site.tagline}
-              </h1>
-              <AudienceSwitcher />
+        {/*
+          Hero: the statement, what backs it up, and where to go next —
+          left-aligned like the rest of the page. Tall enough that the
+          first screen holds the hero alone: the viewport less the header,
+          which is 76px on phones (just the Menu) and 100px once the nav row
+          shows. Each part fades up on load, 80ms after the one before.
+        */}
+        <section className="flex min-h-[calc(100svh-76px)] flex-col items-start pb-[60px] pt-[72px] sm:min-h-[calc(100svh-100px)] sm:pt-[120px]">
+          {/* Availability tag above the statement, after rueuxdesign.vzy.io:
+              a small quiet label with a glowing green dot, no link. */}
+          <p
+            className="hero-in mb-5 inline-flex items-center gap-2 rounded-full bg-paper-raised px-3 py-1 text-sm text-ink-soft"
+            style={{ animationDelay: "0ms" }}
+          >
+            <span
+              aria-hidden="true"
+              className="glow-dot size-2 shrink-0 rounded-full bg-ok"
+            />
+            {site.availabilityLabel}
+          </p>
+          {/* Her spec at 64/62, nudged up a step to 72/70. -1px letter
+              spacing, in an 889px column. Phones are at 44px, where 889px
+              can't apply. */}
+          <h1
+            className="hero-in max-w-[20em] font-hero text-[44px] font-medium leading-[52px] tracking-[-1px] text-ink sm:max-w-[889px] sm:text-[72px] sm:leading-[74px]"
+            style={{ animationDelay: "0ms" }}
+          >
+            {/* In an 889px column the line would run on to "figure", so the
+                break after "people" is set here. Phones wrap on their own. */}
+            {site.tagline.split(" people ")[0]} people
+            <br className="hidden sm:block" />{" "}
+            {site.tagline.split(" people ")[1]}
+          </h1>
 
-              <div className="mt-8 flex items-center gap-6">
-                {/* Secondary: same outlined treatment as the audience pills. */}
-                <a
-                  href="#contact"
-                  className="rounded-full border border-rule px-[23px] py-[11px] text-sm text-ink-soft transition-colors hover:border-ink-faint hover:text-ink"
-                >
-                  Contact me
-                </a>
-                {/* Primary. */}
-                <a
-                  href="#contact"
-                  className="rounded-full bg-ink px-6 py-3 text-sm text-paper transition-opacity hover:opacity-85"
-                >
-                  Work with me
-                </a>
-              </div>
-
-            </div>
-
-            {/* Scroll cue. Sits outside the centred block so it aligns to the
-                page's left gutter. A link, not plain text, since a cue you
-                can't tap is a tease on a touch screen. */}
-            <a
-              href="#work"
-              className="mt-[84px] inline-flex items-center gap-2 text-xs text-ink-faint transition-colors hover:text-ink-soft"
-            >
-              Scroll
-              <span aria-hidden="true">↓</span>
-            </a>
+          {/* Her audience tabs, back in the hero: one pitch per visitor, with
+              "For anyone" carrying it for everyone who never clicks. */}
+          <div className="hero-in" style={{ animationDelay: "80ms" }}>
+            <AudienceSwitcher />
           </div>
 
+          {/* Scroll cue, anchored to the bottom of the screen (mt-auto) so
+              the empty space reads as deliberate. A link, not plain text,
+              since a cue you can't tap is a tease on a touch screen. */}
+          <a
+            href="#work"
+            className="hero-in mt-auto inline-flex items-center gap-2 pt-8 sm:pt-16 text-sm font-semibold text-ink underline underline-offset-4 transition-colors hover:text-accent"
+            style={{ animationDelay: "160ms" }}
+          >
+            Scroll
+            <span aria-hidden="true">↓</span>
+          </a>
         </section>
 
-        {/* 01 Work */}
-        {/* 60/60: both gaps around this section come to 120px. */}
+        {/* Work */}
         <section id="work" className="scroll-mt-24 py-[60px]">
           {/*
-            Scale and centring follow the "LATEST WORK" heading at
-            mercyasuquo.framer.website (96px, set solid); the face is her own
-            display serif rather than the condensed sans that site uses.
+            The note beside the heading is after sanikasuryawanshi.vercel.app:
+            a handwritten aside telling visitors what to expect.
           */}
-          <h2 className="mb-10 font-display text-[32px] leading-tight text-ink">
-            My Works
-          </h2>
-
-          {/*
-            A card grid modelled on ajanwachuku.work/home: image first at its
-            own aspect ratio, then title and year on one row, then the blurb.
-            items-start keeps each card at its natural height rather than
-            stretching it to match the tallest card in the row — that's what
-            lets covers of different shapes stagger.
-          */}
-          <div className="grid items-start gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {work.map((c) => (
-              <article key={c.slug}>
-                {/* Without an href the cover is a plain block, not a link —
-                    a card that looks clickable but goes nowhere is worse than
-                    one that doesn't invite the click. */}
-                <CoverLink
-                  href={c.href}
-                  label={`View the ${c.title} case study`}
-                >
-                  {c.video && c.cover ? (
-                    <CoverVideo
-                      src={c.video}
-                      poster={c.cover}
-                      label={`${c.title} — project preview`}
-                    />
-                  ) : c.cover ? (
-                    <Image
-                      src={c.cover}
-                      alt={`${c.title} — project snippet`}
-                      width={c.coverW ?? 1600}
-                      height={c.coverH ?? 1600}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
-                      /* h-auto: the cover keeps its own proportions, which is
-                         what lets cards of different shapes stagger. */
-                      className="h-auto w-full transition-opacity group-hover:opacity-90"
-                    />
-                  ) : (
-                    /* Shown until a cover lands in /public/work. Square, so it
-                       sits neutrally among covers of varying shapes. */
-                    <div className="flex aspect-square w-full items-center justify-center border border-dashed border-rule bg-paper-raised">
-                      <span className="px-6 text-center font-mono text-xs tracking-widest text-ink-faint">
-                        cover image
-                        <br />
-                        /work/{c.slug}.jpg
-                      </span>
-                    </div>
-                  )}
-                </CoverLink>
-
-                <div className="mt-4 flex items-baseline justify-between gap-4">
-                  <h3 className="font-display text-2xl leading-tight">
-                    {c.href ? (
-                      <a
-                        href={c.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="transition-colors hover:text-accent"
-                      >
-                        {c.title}
-                      </a>
-                    ) : (
-                      c.title
-                    )}
-                  </h3>
-                  <span className="shrink-0 text-sm text-ink-faint">
-                    {c.year}
-                  </span>
-                </div>
-
-                <p className="mt-2 text-base leading-relaxed text-ink-soft">
-                  {c.blurb}
-                </p>
-              </article>
-            ))}
+          <div className="mb-10 flex flex-wrap items-end gap-x-6 gap-y-2">
+            <h2 className="font-hero text-[32px] font-bold leading-tight tracking-[-0.02em] text-ink sm:text-[40px]">
+              Things I&rsquo;ve designed
+            </h2>
+            <p className="flex -rotate-3 items-center gap-1.5 pb-1 font-hand text-2xl leading-none text-accent">
+              <svg
+                viewBox="0 0 36 24"
+                width="32"
+                height="22"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M34 6C24 2 12 4 6 16" />
+                <path d="M3 9l3 8 8-3" />
+              </svg>
+              {workNote()}
+            </p>
           </div>
 
+          {/*
+            Cards after vladshumov.com/products. items-stretch so every card in
+            a row is the same height; each arrives on scroll a beat after the
+            one before it.
+          */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {work.map((c, i) => (
+              <Reveal key={c.slug} delay={(i % 3) * 90} className="h-full">
+                <WorkCard study={c} />
+              </Reveal>
+            ))}
+          </div>
         </section>
 
         {/*
@@ -204,7 +152,7 @@ export default function Home() {
           (no panels anywhere else on it).
         */}
         <section id="process" className="scroll-mt-24 pb-[120px] pt-[60px]">
-          <h2 className="mb-10 font-display text-[32px] leading-tight text-ink">
+          <h2 className="mb-10 font-hero text-[32px] font-bold leading-tight tracking-[-0.02em] text-ink sm:text-[40px]">
             My Process
           </h2>
 
@@ -217,7 +165,7 @@ export default function Home() {
                 <span className="text-sm text-ink-faint">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="font-display text-2xl leading-tight">
+                <h3 className="font-hero text-2xl font-medium leading-tight tracking-[-0.01em]">
                   {step.name}
                 </h3>
                 <p className="text-base leading-relaxed text-ink-soft">
@@ -238,7 +186,7 @@ export default function Home() {
                   key={t.name}
                   className="rounded-xl border border-rule bg-paper-raised p-8"
                 >
-                  <p className="font-display text-xl leading-snug">
+                  <p className="font-hero text-xl leading-snug">
                     “{t.quote}”
                   </p>
                   <footer className="mt-6 text-sm text-ink-soft">
@@ -249,89 +197,6 @@ export default function Home() {
             </div>
           </section>
         )}
-
-        {/*
-          Contact, following mercyasuquo.framer.website/contact: heading,
-          invitation and social marks on the left, the form on the right.
-        */}
-        <section id="contact" className="scroll-mt-24 pb-[120px] pt-[60px]">
-          <div className="grid gap-12 md:grid-cols-2 md:items-start md:gap-16">
-            <div>
-          {/* Availability pill, as on ajanwachuku.work/contact. Driven by
-              site.available, so switching it off hides it. */}
-          {site.available && (
-            <p className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-rule px-3.5 py-1.5 text-sm text-ink-soft">
-              {/* The dot carries the signal; the chip itself stays neutral so
-                  the only green on the page is 6px wide. */}
-              <span
-                aria-hidden="true"
-                className="relative flex h-2 w-2 items-center justify-center"
-              >
-                <span className="absolute h-2 w-2 animate-ping rounded-full bg-ok opacity-60" />
-                <span className="relative h-2 w-2 rounded-full bg-ok" />
-              </span>
-              {site.availabilityLabel}
-            </p>
-          )}
-
-          <h2 className="max-w-[720px] font-display text-[48px] leading-[1.05] tracking-[-0.5px] text-ink sm:text-[72px]">
-            Let&rsquo;s work together
-          </h2>
-
-          <p className="mt-6 max-w-[520px] text-lg leading-[26px] tracking-[-0.5px] text-ink-soft">
-            Have a project in mind, a role to discuss, or just want to say hi?
-            I&rsquo;m always open to meaningful conversations and new
-            opportunities.
-          </p>
-
-          <a
-            href={`mailto:${site.email}`}
-            className="mt-8 inline-block font-display text-2xl text-[#0E6CD0] underline underline-offset-8 sm:text-3xl"
-          >
-            {site.email}
-          </a>
-
-          {/* Same marks as the header, at button size. */}
-          <ul className="mt-10 flex flex-wrap gap-3">
-            {site.socials.map((social) => (
-              <li key={social.label}>
-                <a
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={social.label}
-                  className="flex h-12 w-12 items-center justify-center rounded-full border border-rule text-ink transition-colors hover:border-ink-faint hover:text-accent"
-                >
-                  <SocialIcon label={social.label} />
-                </a>
-              </li>
-            ))}
-            <li>
-              <a
-                href={`mailto:${site.email}`}
-                aria-label="Email"
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-rule text-ink transition-colors hover:border-ink-faint hover:text-accent"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  width="16"
-                  height="16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  aria-hidden="true"
-                >
-                  <rect x="2" y="4" width="20" height="16" rx="2" />
-                  <path d="m2 7 10 6 10-6" />
-                </svg>
-              </a>
-            </li>
-              </ul>
-            </div>
-
-            <ContactForm email={site.email} />
-          </div>
-        </section>
       </main>
     </>
   );

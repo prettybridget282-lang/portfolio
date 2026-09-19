@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
-import { InlineScript } from "@/app/components/inline-script";
+import localFont from "next/font/local";
+import { Caveat, Inter } from "next/font/google";
+import { SiteFooter } from "@/app/components/site-footer";
 import { SiteHeader } from "@/app/components/site-header";
+import { ToolTrail } from "@/app/components/tool-trail";
 import { nav, site } from "@/lib/content";
 import "./globals.css";
 
@@ -10,10 +12,24 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const display = Instrument_Serif({
-  variable: "--font-display",
+// The handwritten asides, like the note beside the work heading — after the
+// scribbled notes on sanikasuryawanshi.vercel.app.
+const hand = Caveat({
+  variable: "--font-hand",
   subsets: ["latin"],
-  weight: "400",
+  weight: "600",
+});
+
+// Every heading on the site. Satoshi isn't a Google font — it's from Fontshare
+// (Indian Type Foundry) under the ITF Free Font License, which permits
+// self-hosting; the licence text sits beside the file. The licence forbids
+// altering or converting the font, so this is the official variable woff2,
+// unmodified. One variable file covers every weight.
+const hero = localFont({
+  src: "./fonts/Satoshi-Variable.woff2",
+  variable: "--font-hero",
+  weight: "300 900",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,45 +42,25 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      suppressHydrationWarning
-      className={`${inter.variable} ${display.variable} h-full antialiased`}
+      className={`${inter.variable} ${hand.variable} ${hero.variable} h-full antialiased`}
     >
-      <head>
-        {/*
-          Runs while the HTML is still parsing, so a saved theme is applied
-          before the first paint. With nothing saved, the system theme wins.
-        */}
-        <InlineScript
-          html={`(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`}
-        />
-      </head>
       {/* Header and footer live here so every route shares them. */}
       <body className="min-h-full flex flex-col">
-        <SiteHeader nav={nav} socials={site.socials} />
+        {/*
+          The page itself, on its own panel with big rounded bottom corners.
+          The body behind it is black, so the corners curve into the contact
+          footer, as on rachelatwork.com. The hairline along the bottom edge
+          keeps the curve visible, since the page is already dark.
+        */}
+        <div className="relative z-10 flex flex-1 flex-col rounded-b-[40px] border-b border-rule bg-paper sm:rounded-b-[64px]">
+          <SiteHeader nav={nav} />
 
-        {children}
+          {children}
+        </div>
 
-        <footer className="border-t border-rule">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-8 text-sm text-ink-soft">
-            <p>
-              {site.name}, {site.role}. {site.location}.
-            </p>
-            <ul className="flex gap-6">
-              {site.socials.map((s) => (
-                <li key={s.label}>
-                  <a
-                    href={s.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-accent"
-                  >
-                    {s.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </footer>
+        <SiteFooter />
+
+        <ToolTrail />
       </body>
     </html>
   );
