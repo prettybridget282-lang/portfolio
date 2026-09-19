@@ -8,30 +8,6 @@ import {
   testimonials,
 } from "@/lib/content";
 
-const NUMBER_WORDS = [
-  "no",
-  "one",
-  "two",
-  "three",
-  "four",
-  "five",
-  "six",
-  "seven",
-  "eight",
-  "nine",
-  "ten",
-];
-
-/** "five projects, one with AI inside": counted from the data, so adding a
- *  project updates the note by itself. */
-function workNote() {
-  const say = (n: number) => NUMBER_WORDS[n] ?? String(n);
-  const total = caseStudies.length;
-  const ai = caseStudies.filter((c) => c.ai).length;
-  const projects = `${say(total)} project${total === 1 ? "" : "s"}`;
-  return ai > 0 ? `${projects}, ${say(ai)} with AI inside` : projects;
-}
-
 function SectionLabel({ index, title }: { index: string; title: string }) {
   return (
     <div className="mb-10 flex items-baseline gap-4 border-t border-rule pt-4">
@@ -56,7 +32,7 @@ export default function Home() {
           which is 76px on phones (just the Menu) and 100px once the nav row
           shows. Each part fades up on load, 80ms after the one before.
         */}
-        <section className="flex min-h-[calc(100svh-76px)] flex-col items-start pb-[60px] pt-[72px] sm:min-h-[calc(100svh-100px)] sm:pt-[120px]">
+        <section className="flex min-h-[calc(100svh-76px)] flex-col items-start pb-[60px] pt-[40px] sm:min-h-[calc(100svh-100px)] sm:pt-[88px]">
           {/* Availability tag above the statement, after rueuxdesign.vzy.io:
               a small quiet label with a glowing green dot, no link. */}
           <p
@@ -104,32 +80,9 @@ export default function Home() {
 
         {/* Work */}
         <section id="work" className="scroll-mt-24 py-[60px]">
-          {/*
-            The note beside the heading is after sanikasuryawanshi.vercel.app:
-            a handwritten aside telling visitors what to expect.
-          */}
-          <div className="mb-10 flex flex-wrap items-end gap-x-6 gap-y-2">
-            <h2 className="font-hero text-[32px] font-bold leading-tight tracking-[-0.02em] text-ink sm:text-[40px]">
-              Things I&rsquo;ve designed
-            </h2>
-            <p className="flex -rotate-3 items-center gap-1.5 pb-1 font-hand text-2xl leading-none text-accent">
-              <svg
-                viewBox="0 0 36 24"
-                width="32"
-                height="22"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M34 6C24 2 12 4 6 16" />
-                <path d="M3 9l3 8 8-3" />
-              </svg>
-              {workNote()}
-            </p>
-          </div>
+          <h2 className="mb-10 font-hero text-[32px] font-bold leading-tight tracking-[-0.02em] text-ink sm:text-[40px]">
+            Selected Work
+          </h2>
 
           {/*
             Cards after vladshumov.com/products. items-stretch so every card in

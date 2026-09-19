@@ -6,11 +6,15 @@ const FLAG = "🇳🇬";
 
 /** Turns any organisation name that has a site (see `roles`) into a link to it. */
 function withOrgLinks(text: string) {
-  const linked = roles.filter((role) => role.href && text.includes(role.org));
+  // Case-insensitive: her intro writes "AgriSense", the roles list "Agrisense".
+  const lower = text.toLowerCase();
+  const linked = roles.filter(
+    (role) => role.href && lower.includes(role.org.toLowerCase()),
+  );
   if (!linked.length) return text;
-  const pattern = new RegExp(`(${linked.map((role) => role.org).join("|")})`);
+  const pattern = new RegExp(`(${linked.map((role) => role.org).join("|")})`, "i");
   return text.split(pattern).map((piece, i) => {
-    const role = linked.find((r) => r.org === piece);
+    const role = linked.find((r) => r.org.toLowerCase() === piece.toLowerCase());
     return role ? (
       <a
         key={i}
