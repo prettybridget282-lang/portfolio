@@ -46,7 +46,7 @@ export const about = {
   heading: "What I do",
   /** The paragraph beside the portrait. */
   intro:
-    "I'm a product designer from Nigeria 🇳🇬. My background is in Political Science, but I eventually found my way into product design because I loved the intersection of creativity and problem-solving, using colour, typography, shapes, and interaction to turn ideas into useful experiences. Along the way, I've designed landing pages and digital products, including work with AgriSense Technologies.",
+    "I'm a product designer from Nigeria 🇳🇬. My background is in Political Science, but I eventually found my way into product design because I loved the intersection of creativity and problem-solving, using colour, typography, shapes, and interaction to turn ideas into useful experiences.",
   whatIDo: [
     "I design digital products that work for both people and the business behind them.",
     "I turn complex problems into clear, intuitive experiences that help users accomplish what they need while supporting business goals like conversion, retention, and growth.",
