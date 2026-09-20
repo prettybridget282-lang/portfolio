@@ -32,7 +32,7 @@ export default function Home() {
           which is 76px on phones (just the Menu) and 100px once the nav row
           shows. Each part fades up on load, 80ms after the one before.
         */}
-        <section className="flex min-h-[calc(100svh-76px)] flex-col items-start pb-[60px] pt-[40px] sm:min-h-[calc(100svh-100px)] sm:pt-[88px]">
+        <section className="flex min-h-[calc(100svh-76px)] flex-col items-start pb-[60px] pt-0 sm:min-h-[calc(100svh-100px)] sm:pt-[48px]">
           {/* Availability tag above the statement, after rueuxdesign.vzy.io:
               a small quiet label with a glowing green dot, no link. */}
           <p
