@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Caveat, Inter } from "next/font/google";
@@ -61,6 +62,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteFooter />
 
         <ToolTrail />
+
+        {/* Vercel Web Analytics: visit counts, pages, sources, countries and
+            devices, readable only in her Vercel dashboard. Nothing renders. */}
+        <Analytics />
       </body>
     </html>
   );
