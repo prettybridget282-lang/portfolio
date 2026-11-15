@@ -81,7 +81,7 @@ export default function Home() {
         {/* Work */}
         <section id="work" className="scroll-mt-24 py-[60px]">
           <h2 className="mb-10 font-hero text-[32px] font-bold leading-tight tracking-[-0.02em] text-ink sm:text-[40px]">
-            Selected Work
+            Projects I&apos;ve worked on
           </h2>
 
           {/*
