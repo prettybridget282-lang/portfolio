@@ -257,6 +257,9 @@ export const caseStudies: CaseStudy[] = [
         // Every section of the live store, captured one by one from the build:
         // desktop at 1440 wide (saved at 1920), phone at 390 wide (saved at 780).
         blocks: [
+          // Presentation image: the full desktop homepage and the top of the
+          // phone homepage from the build, over one of the store's own photos.
+          { type: "images", images: [{ src: "/work/brees-footwear/presentation.jpg", alt: "Bree's Footwear presentation: the full desktop homepage tilted on the left and the phone homepage standing on the right, over a blurred photo of ballet flats on a brick path", w: 2380, h: 3108 }] },
           { type: "h3", text: "Homepage" },
           { type: "images", images: [{ src: "/work/brees-footwear/web-header.jpg", alt: "Header: the delivery note, the Bree's Footwear wordmark, the five flat styles and the search, account and cart icons", w: 1920, h: 168 }] },
           { type: "images", images: [{ src: "/work/brees-footwear/web-hero.jpg", alt: "Hero: “Easy flats for long, full days.” beside olive, white and brown leather cross slides", w: 1920, h: 907 }] },
