@@ -198,7 +198,7 @@ export const caseStudies: CaseStudy[] = [
     blurb:
       "Bree's Footwear is a fictional Lagos shoe store that sells only flats: slides, mules, sandals and ballet flats. I designed it in Figma and built it as a working Shopify store.",
     summary:
-      "A working Shopify store with a theme made from my own Figma design, not a template: homepage, product pages, collections and a bag that takes orders through Shopify's checkout.",
+      "A working Shopify store with a theme made from my own Figma design, not a template: homepage, product pages, collections and a cart that takes orders through Shopify's checkout.",
     sector: "E-commerce",
     year: "2026",
     tags: ["Shopify", "Web", "Mobile"],
@@ -206,7 +206,7 @@ export const caseStudies: CaseStudy[] = [
     liveLabel: "Visit the live store",
     // A Shopify development store always sits behind a password.
     livePassword: "bewcki",
-    cover: "/work/brees-footwear/d-hero.jpg",
+    cover: "/work/brees-footwear/cover.jpg",
     coverW: 1920,
     coverH: 1200,
     // Drafts written from what happened in the project; she hasn't reviewed
@@ -254,33 +254,42 @@ export const caseStudies: CaseStudy[] = [
       {
         id: "visual-designs",
         title: "Visual Designs",
-        // Screenshots of the working store: desktop at 1440×900 (saved at
-        // 1920 wide) and phone at 390×844 at 2×.
+        // Every section of the live store, captured one by one from the build:
+        // desktop at 1440 wide (saved at 1920), phone at 390 wide (saved at 780).
         blocks: [
-          { type: "h3", text: "Web" },
-          {
-            type: "images",
-            images: [
-              { src: "/work/brees-footwear/d-hero.jpg", alt: "Bree's Footwear homepage: the headline “Easy flats for long, full days.” beside olive, white and brown leather cross slides", w: 1920, h: 1200 },
-              { src: "/work/brees-footwear/d-styles.jpg", alt: "Shop by style: Slides, Mules, Sandals and Ballet flats tiles with the number of styles in each", w: 1920, h: 1200 },
-              { src: "/work/brees-footwear/d-new-in.jpg", alt: "New in: four product cards with photo, name, price in naira and colour", w: 1920, h: 1200 },
-              { src: "/work/brees-footwear/d-story.jpg", alt: "Why flats: “Flat doesn’t have to mean plain.” beside a photo of tan strappy sandals", w: 1920, h: 1200 },
-              { src: "/work/brees-footwear/d-product.jpg", alt: "Ada Cross Slide product page: photo gallery, colour, sizes 36 to 42 with 42 sold out, and Add to bag", w: 1920, h: 1200 },
-              { src: "/work/brees-footwear/d-collection.jpg", alt: "All flats: the full collection in a four-column grid", w: 1920, h: 1200 },
-              { src: "/work/brees-footwear/d-bag.jpg", alt: "Your bag: one pair of Ada Cross Slides with the subtotal and a Check out button", w: 1920, h: 1200 },
-            ],
-          },
+          { type: "h3", text: "Homepage" },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-header.jpg", alt: "Header: the delivery note, the Bree's Footwear wordmark, the five flat styles and the search, account and cart icons", w: 1920, h: 168 }] },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-hero.jpg", alt: "Hero: “Easy flats for long, full days.” beside olive, white and brown leather cross slides", w: 1920, h: 907 }] },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-shop-by-style.jpg", alt: "Shop by style: Slides, Mules, Sandals and Ballet flats, each with its number of styles", w: 1920, h: 976 }] },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-new-in.jpg", alt: "New in: Ada Cross Slide, Kemi Fisherman, Pearl Point Mule and Tolu Woven Mule with prices in naira", w: 1920, h: 867 }] },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-why-flats.jpg", alt: "Why flats: “Flat doesn’t have to mean plain.” with three reasons, beside a photo of tan strappy sandals", w: 1920, h: 1013 }] },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-bestsellers.jpg", alt: "Bestsellers: Amara Ballet Flat, Ife Strappy Sandal, Nneka Buckle Slide and Sade Snake Mule", w: 1920, h: 963 }] },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-newsletter.jpg", alt: "Newsletter: “First look at new flats” with an email field and Sign up button", w: 1920, h: 296 }] },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-footer.jpg", alt: "Footer: Shop, Help and About links under the Bree’s Footwear wordmark", w: 1920, h: 493 }] },
+          { type: "h3", text: "Product page" },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-product.jpg", alt: "Ada Cross Slide: photo gallery, price, colour, sizes 36 to 42 with 42 sold out, Add to cart and the Details list", w: 1920, h: 1461 }] },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-you-may-also-like.jpg", alt: "You may also like: four more flats under the product", w: 1920, h: 937 }] },
+          { type: "h3", text: "All flats" },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-all-flats.jpg", alt: "All flats: all eight styles in a four-column grid", w: 1920, h: 1652 }] },
+          { type: "h3", text: "Cart" },
+          { type: "images", images: [{ src: "/work/brees-footwear/web-cart.jpg", alt: "Your cart: one pair of Ada Cross Slides in size 36, the subtotal and Check out", w: 1920, h: 689 }] },
           { type: "h3", text: "Mobile" },
           {
             type: "images",
             columns: 3,
             images: [
-              { src: "/work/brees-footwear/m-home.jpg", alt: "Homepage on a phone: the slides photo above the headline and Shop the collection button", w: 780, h: 1688 },
-              { src: "/work/brees-footwear/m-styles.jpg", alt: "Shop by style on a phone: the four style tiles in two columns", w: 780, h: 1688 },
-              { src: "/work/brees-footwear/m-product.jpg", alt: "Product page on a phone: the main photo with thumbnails below it", w: 780, h: 1688 },
-              { src: "/work/brees-footwear/m-sizes.jpg", alt: "Choosing a size on a phone: colour, size buttons, Add to bag and the Details list", w: 780, h: 1688 },
-              { src: "/work/brees-footwear/m-menu.jpg", alt: "The phone menu open with Shop all, Slides, Mules, Sandals and Ballet flats", w: 780, h: 1688 },
-              { src: "/work/brees-footwear/m-bag.jpg", alt: "Your bag on a phone: one pair with the subtotal and Check out", w: 780, h: 1688 },
+              { src: "/work/brees-footwear/phone-hero.jpg", alt: "Phone hero: the slides photo above the headline and Shop the collection", w: 780, h: 1650 },
+              { src: "/work/brees-footwear/phone-menu.jpg", alt: "Phone menu open: Shop all, Slides, Mules, Sandals and Ballet flats", w: 780, h: 1688 },
+              { src: "/work/brees-footwear/phone-shop-by-style.jpg", alt: "Shop by style on a phone: four style tiles in two columns", w: 780, h: 1492 },
+              { src: "/work/brees-footwear/phone-new-in.jpg", alt: "New in on a phone: four flats in two columns", w: 780, h: 1508 },
+              { src: "/work/brees-footwear/phone-why-flats.jpg", alt: "Why flats on a phone: the photo above the three reasons", w: 780, h: 1842 },
+              { src: "/work/brees-footwear/phone-bestsellers.jpg", alt: "Bestsellers on a phone: four flats in two columns", w: 780, h: 1620 },
+              { src: "/work/brees-footwear/phone-newsletter.jpg", alt: "Newsletter on a phone: email field and Sign up", w: 780, h: 580 },
+              { src: "/work/brees-footwear/phone-footer.jpg", alt: "Footer on a phone: Shop, Help and About links", w: 780, h: 1256 },
+              { src: "/work/brees-footwear/phone-product.jpg", alt: "Ada Cross Slide on a phone: photo, thumbnails, sizes, Add to cart and Details", w: 780, h: 3366 },
+              { src: "/work/brees-footwear/phone-you-may-also-like.jpg", alt: "You may also like on a phone", w: 780, h: 1606 },
+              { src: "/work/brees-footwear/phone-all-flats.jpg", alt: "All flats on a phone: eight styles in two columns", w: 780, h: 3098 },
+              { src: "/work/brees-footwear/phone-cart.jpg", alt: "Your cart on a phone: one pair, the subtotal and Check out", w: 780, h: 1440 },
             ],
           },
         ],
