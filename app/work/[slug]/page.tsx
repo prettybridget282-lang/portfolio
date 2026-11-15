@@ -270,14 +270,21 @@ export default async function CaseStudyPage({
           </dl>
 
           {study.live && (
-            <a
-              href={study.live}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-block text-sm font-semibold text-ink underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              Visit the live app <span aria-hidden="true">↗</span>
-            </a>
+            <div className="flex flex-col gap-2">
+              <a
+                href={study.live}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block text-sm font-semibold text-ink underline underline-offset-4 transition-colors hover:text-accent"
+              >
+                {study.liveLabel ?? "Visit the live app"} <span aria-hidden="true">↗</span>
+              </a>
+              {study.livePassword && (
+                <p className="text-sm text-ink-faint">
+                  Password: <span className="font-semibold text-ink">{study.livePassword}</span>
+                </p>
+              )}
+            </div>
           )}
         </aside>
 

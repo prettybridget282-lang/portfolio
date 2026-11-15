@@ -170,6 +170,11 @@ export type CaseStudy = {
   ai?: boolean
   /** The working build, linked from the project page's side panel. */
   live?: string
+  /** Link text for `live`. Defaults to "Visit the live app". */
+  liveLabel?: string
+  /** Shown under the live link when the build sits behind a password,
+   *  e.g. a Shopify development store. */
+  livePassword?: string
   /*
     The written case study. Every page follows the same order: Overview, My
     Role, Project Duration, Tools Used, then `sections` (Challenge / Problem,
@@ -185,6 +190,103 @@ export type CaseStudy = {
 }
 
 export const caseStudies: CaseStudy[] = [
+  {
+    slug: "brees-footwear",
+    title: "Bree's Footwear: Shopify Store",
+    oneLiner:
+      "A flats-only shoe store I designed in Figma and built on Shopify with a custom theme.",
+    blurb:
+      "Bree's Footwear is a fictional Lagos shoe store that sells only flats: slides, mules, sandals and ballet flats. I designed it in Figma and built it as a working Shopify store.",
+    summary:
+      "A working Shopify store with a theme made from my own Figma design, not a template: homepage, product pages, collections and a bag that takes orders through Shopify's checkout.",
+    sector: "E-commerce",
+    year: "2026",
+    tags: ["Shopify", "Web", "Mobile"],
+    live: "https://brees-footwear.myshopify.com",
+    liveLabel: "Visit the live store",
+    // A Shopify development store always sits behind a password.
+    livePassword: "bewcki",
+    cover: "/work/brees-footwear/d-hero.jpg",
+    coverW: 1920,
+    coverH: 1200,
+    // Drafts written from what happened in the project; she hasn't reviewed
+    // them yet. No research or takeaway: ask her rather than invent them.
+    overview: [
+      "Bree's Footwear is a fictional shoe store in Lagos that sells only flats. I made it to show I can take an online store from design to a working Shopify build.",
+    ],
+    role: [
+      "I designed the store in Figma, choosing the look from my own Pinterest board of flats, and turned it into a custom Shopify theme, working with Claude as my coding partner.",
+    ],
+    duration: {
+      total: "2 days",
+      phases: [
+        { when: "14 Nov", what: "Visual direction from my Pinterest board; homepage and product page designed in Figma" },
+        { when: "14 Nov", what: "Custom Shopify theme built from the Figma frames" },
+        { when: "15 Nov", what: "Header revised in Figma and updated in the build; 8 products added; prices in naira" },
+      ],
+    },
+    tools: ["Figma", "Shopify", "Claude"],
+    sections: [
+      {
+        id: "challenge",
+        title: "Challenge",
+        blocks: [
+          {
+            type: "p",
+            text: "Shopify's theme editor only lets you stack ready-made sections and change their settings. Designing the store there felt nothing like designing in Figma, and the result would have looked like every other template.",
+          },
+        ],
+      },
+      {
+        id: "solution",
+        title: "Solution",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Design first: every page started as a Figma frame, so the build had a fixed design to match.",
+              "Custom theme: the store runs on a theme built from those frames, not an edited template.",
+              "Still editable: headings, text and photos can be changed in Shopify's theme editor without touching code.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "visual-designs",
+        title: "Visual Designs",
+        // Screenshots of the working store: desktop at 1440×900 (saved at
+        // 1920 wide) and phone at 390×844 at 2×.
+        blocks: [
+          { type: "h3", text: "Web" },
+          {
+            type: "images",
+            images: [
+              { src: "/work/brees-footwear/d-hero.jpg", alt: "Bree's Footwear homepage: the headline “Easy flats for long, full days.” beside olive, white and brown leather cross slides", w: 1920, h: 1200 },
+              { src: "/work/brees-footwear/d-styles.jpg", alt: "Shop by style: Slides, Mules, Sandals and Ballet flats tiles with the number of styles in each", w: 1920, h: 1200 },
+              { src: "/work/brees-footwear/d-new-in.jpg", alt: "New in: four product cards with photo, name, price in naira and colour", w: 1920, h: 1200 },
+              { src: "/work/brees-footwear/d-story.jpg", alt: "Why flats: “Flat doesn’t have to mean plain.” beside a photo of tan strappy sandals", w: 1920, h: 1200 },
+              { src: "/work/brees-footwear/d-product.jpg", alt: "Ada Cross Slide product page: photo gallery, colour, sizes 36 to 42 with 42 sold out, and Add to bag", w: 1920, h: 1200 },
+              { src: "/work/brees-footwear/d-collection.jpg", alt: "All flats: the full collection in a four-column grid", w: 1920, h: 1200 },
+              { src: "/work/brees-footwear/d-bag.jpg", alt: "Your bag: one pair of Ada Cross Slides with the subtotal and a Check out button", w: 1920, h: 1200 },
+            ],
+          },
+          { type: "h3", text: "Mobile" },
+          {
+            type: "images",
+            columns: 3,
+            images: [
+              { src: "/work/brees-footwear/m-home.jpg", alt: "Homepage on a phone: the slides photo above the headline and Shop the collection button", w: 780, h: 1688 },
+              { src: "/work/brees-footwear/m-styles.jpg", alt: "Shop by style on a phone: the four style tiles in two columns", w: 780, h: 1688 },
+              { src: "/work/brees-footwear/m-product.jpg", alt: "Product page on a phone: the main photo with thumbnails below it", w: 780, h: 1688 },
+              { src: "/work/brees-footwear/m-sizes.jpg", alt: "Choosing a size on a phone: colour, size buttons, Add to bag and the Details list", w: 780, h: 1688 },
+              { src: "/work/brees-footwear/m-menu.jpg", alt: "The phone menu open with Shop all, Slides, Mules, Sandals and Ballet flats", w: 780, h: 1688 },
+              { src: "/work/brees-footwear/m-bag.jpg", alt: "Your bag on a phone: one pair with the subtotal and Check out", w: 780, h: 1688 },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   {
     slug: "tapah",
     title: "Tapah: Manifestation App",
