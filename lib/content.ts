@@ -313,7 +313,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Wellbeing",
     year: "2026",
     tags: ["Web app", "Mobile"],
-    live: "https://calling-in.vercel.app/",
+    live: "https://tapah.vercel.app/",
     cover: "/work/tapah-cover.jpg",
     coverW: 2400,
     coverH: 1800,
